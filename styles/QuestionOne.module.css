@@ -1,0 +1,224 @@
+.questionDashboardWrapper{
+    /* background-image: url('../public/backgroundImg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* width: 100%;
+    height: 100%; */
+    /* z-index: 100; */
+    /* position: relative; */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.questionDashboard{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0;
+    padding: 30px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.questionLeft{
+    height: 750px;
+    position: relative;
+    width: 46%;
+    /* border-radius: 10px; */
+}
+
+.questionPara{
+color: #fff;
+font-size: 30px;
+font-weight: 600;
+left: 50%;
+line-height: 50px;
+margin-bottom: 0;
+position: absolute;
+text-align: center;
+top: 50%;
+transform: translate(-50%,-50%);
+width: 400px;
+margin-top: 0px;
+}
+
+.questionRight{
+display: flex;
+flex-direction: column;
+height: 750px;
+justify-content: space-between;
+padding-left: 50px;
+padding-right: 50px;
+width: 54%;
+margin: 0px;
+}
+
+.questionRightFirst{
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ height: 60%;
+ padding-bottom: 1.25rem;
+}
+
+.backBtn{
+color: #92a18d;
+cursor: pointer;
+font-size: 18px;
+font-weight: 400;
+line-height: 30px;
+text-decoration: none;
+width: 10%
+}
+
+.questionDesc{
+color: #545454;
+font-size: 22px;
+font-weight: 400;
+line-height: 35px;
+margin-bottom: 0;
+/* margin-top: 40px; */
+}
+
+.textCapitalize{
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: textclip 4s linear infinite;
+    animation: textclip 4s linear infinite;
+    background-clip: initial;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(-225deg,#23473f,#58695f 29%,#8c9b86 67%,#aeccbb);
+    background-size: initial;
+    background-size: 200% auto;
+    color: #fff;
+    display: inline-block;
+    font-weight: 700;
+    text-transform: capitalize !important;
+}
+
+.question{
+color: #000;
+font-size: 32px;
+font-weight: 600;
+line-height: 45px;
+margin-bottom: 0;
+/* margin-top: 4.5rem; */
+}
+
+.questionInputRange{
+    margin-top: 50px;
+    
+}
+
+.rangeField{
+    border: 0;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+}
+
+.range{
+    /* -webkit-appearance: none; */
+    border: 0;
+    bottom: -10px;
+    margin: 0 0 20px;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+
+}
+
+/* .rangePoint{
+
+} */
+
+.questionFooter{
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    height: 40%;
+}
+
+.nextBtn{
+    background: #778970;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 45px rgba(119,137,112,.15);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 10px 0;
+    width: 150px;
+    cursor: pointer;
+}
+
+.questionSteps{
+   display: flex;
+}
+
+.activeSteps{
+    border-bottom: 3px solid #778970;
+    margin-left: 10px;
+    width: 50px;
+}
+
+.activeSteps span{
+color: #778970;
+font-size: 14px;
+font-weight: 600;
+line-height: 30px;
+}
+
+.inactiveSteps{
+    border-bottom: 3px solid #e8ebe7;
+    margin-left: 10px;
+    width: 50px;
+}
+
+.amenitiesList{
+    align-items: center;
+    display: flex;
+    margin-top: 30px;
+}
+
+.amenitiesItems{
+    border: 1px solid #778970;
+    border-radius: 10px;
+    height: 150px;
+    margin-right: 25px;
+    position: relative;
+    text-align: center;
+    width: 150px;
+    /* overflow: hidden */
+}
+
+.checkInput{
+    /* background-color: transparent; */
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 20px;
+    /* opacity: 0.5 */
+    /* z-index: 100; */
+}
+
+.checkSpan{
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    /* margin-top: 50px; */
+    text-transform: capitalize;
+    position: relative;
+    top: 160px;
+    width: 100%;
+    /* z-index: 200;  */
+}

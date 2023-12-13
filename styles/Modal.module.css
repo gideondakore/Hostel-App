@@ -1,0 +1,127 @@
+.overlay{
+ border: 5px solid black;
+ position: fixed;
+ /* position: relative; */
+ top: 0px;
+ right: 0px;
+ width: 100vw;
+ height: 100vh;
+ background-color: rgba(93, 84, 84, 0.5);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ /* background-color: gold; */
+
+ 
+}
+.modalBody{
+   /* background-color: gold; */
+   border-radius: 10px;
+   width: 450px;
+   background: #fff;
+   box-shadow: 0 12px 15px 0 rgba(0,0,0,.25);
+   display: inline-block;
+   margin: 1.2rem;
+   max-width: 800px;
+   overflow-y: auto;
+   padding: 1.2rem;
+   position: relative;
+   text-align: left;
+   vertical-align: middle;
+}
+
+.form{
+  margin-top: 10px;
+  /* background-color: gold; */
+}
+
+.registerInputItem{
+    margin-top: 20px
+}
+
+.registerInputItem label {
+    color: #545454;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+
+.inputItem{
+    position: relative;
+    width: 100%;
+    /* background-color: red; */
+}
+
+.inputItem input{
+    background: #fff;
+    border: 1px solid #d5dbd2;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    outline: none;
+    padding: 9px 30px 9px 10px;
+    width: 100%;
+    margin: 0px;
+}
+
+.registerSelectGender {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+}
+.registerSelectGender label{
+    color: #545454;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    /* display: inline-block; */
+}
+
+
+.selectGender{
+  display: block; 
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;  
+
+  background: #fff;
+    border: 1px solid #d5dbd2;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    outline: none;
+    padding: 9px 30px 9px 10px;
+    width: 100%;
+    margin: 0px;
+}
+
+.disableClick{
+    cursor: pointer; 
+    background-color: initial;
+    border: none;
+    display: flex;
+    padding: 0;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}
+
+.submitBtn{
+    margin: 30px 0 20px;
+    background: #778970;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 45px rgba(119,137,112,.15);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 20px;
+    padding: 9px 0;
+    width: 150px;
+    cursor: pointer;
+}
+

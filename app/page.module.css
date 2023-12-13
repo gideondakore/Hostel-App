@@ -1,0 +1,21 @@
+.home{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    
+
+}
+.caption_txt{
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 30px
+}
+
+.home_btn{
+  border-radius: 20px;
+  /* margin: 50px */
+  width: 100px;
+  /* height: 100px; */
+}

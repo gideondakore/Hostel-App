@@ -1,0 +1,210 @@
+.registerWrapper{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    /* background-color: black; */
+}
+
+.container{
+    width: 85%;
+    /* height: 100%; */
+    /* position: inherit; */
+    /* background-color: rgb(42, 99, 150); */
+    background-color: aliceblue;
+    padding: 12px;
+}
+
+.registerHeader{
+  height: 7rem;
+  overflow: hidden;
+  /* position: absolute; */
+  /* background-color: red; */
+}
+
+.registerBody{
+    /* background-color: gold; */
+    margin-top: 3.75rem;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    
+
+}
+
+.registerLeft{
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+  width: 50%;
+}
+
+/* .wowAnimation{
+
+} */
+
+.registerWrapper .registerBody .registerLeft .registerPara {
+    margin: 30px 0;
+}
+.registerWrapper .registerBody .registerLeft h6 {
+    color: #363636;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 40px;
+}
+
+.registerRight{
+    /* background-color: blue; */
+    /* width: 50%; */
+    width: 50%;
+    /* height: 100vh; */
+    position: relative;
+
+}
+
+.registerWrapper .registerBody .registerLeft .registerForm {
+    margin-top: 10px;
+    /* background-color: blue; */
+    /* border: 5px solid blue; */
+    height: 3rem;
+    border: 2;
+}
+
+.registerWrapper .registerBody .registerLeft .registerForm .btnItem {
+    display: flex;
+    position: row;
+    width: 70%;
+    height: 100%;
+    /* background-color: gold; */
+
+}
+
+.registerWrapper .registerBody .registerLeft .registerForm .btnItem button{
+    margin-right: 1.25rem;
+    width: 40%;
+    cursor: pointer;
+}
+ 
+
+.registerWrapper .container .registerBody .registerLeft .form{
+    /* background-color: red; */
+    /* border: 5px solid red; */
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    /* height: 50%; */
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItem{
+ width: 80%;
+ height: auto;
+ /* background-color: gold; */
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItem .inputItem{
+ width: 100%;
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItem .inputItem input{
+  height: 2.38rem;
+  width: 90%;
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItemWithCredentialsInput{
+    width: 80%;
+    height: auto;
+    margin-top: 1.25rem;
+    /* background-color: red;  */
+}
+
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItemWithCredentialsInput .inputItem{
+    width: 100%;
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItemWithCredentialsInput .inputItem input{
+    height: 2.38rem;
+    width: 90%;
+    
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItemWithCredentialsInput .inputItem .continue{
+ width: 90%;
+ display: flex;
+ align-items: flex-end;
+ flex-direction: column;
+ margin-bottom: 2.75rem;
+ height: 2.5rem
+}
+
+.registerWrapper .container .registerBody .registerLeft .form .registerInputItemWithCredentialsInput .inputItem .continue .continueBtn{
+  cursor: pointer;
+  height: 100%;
+
+} 
+
+.registerSelectGender{
+    display: flex;
+    flex-direction: column;
+    height: 3.38rem;
+    width: 72%;
+    margin-top: 1.25rem;
+}
+
+.selectGender{
+    height: 2.38rem;
+    width: 90%;  
+}
+
+.btnItem{
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+    height: 2.38rem;
+    /* width: 50px; */
+}
+
+.btnItem button{
+    cursor: pointer;
+    width: 90px;
+    font-weight: bold;
+    /* font-size: 20px; */
+}
+
+.submitBtn{
+    background: #778970;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 45px rgba(119,137,112,.15);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 20px;
+    padding: 9px 0;
+    width: 150px;
+    cursor: pointer;
+}
+
+.COHKimage{
+  width: 100%;
+  height: 100%
+}
+
+.errorMsg{
+    background-color: rgb(186, 216, 186);
+    width: 50%;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    
+}
+
+

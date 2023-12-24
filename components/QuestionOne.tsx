@@ -3,18 +3,19 @@ import { useStyles } from './StylesContext'
 import useStorage from '@/app/libs/useStorage'
 
 const QuestionOne = () => {
+    const [fullName, setFullName] = useState<string>('');
+    const styles = useStyles();
+    const { getItem, setItem, removeItem } = useStorage()
+
     const [userName] = useState<string>((): string => {
         if (typeof window !== 'undefined') {
-            const from_localStorage = window.localStorage.getItem('user_name');
-            console.log('username ', from_localStorage)
+            const from_localStorage = getItem('user_name', 'local');
             return `${from_localStorage}`;
         }
         return ''
     })
 
-    const [fullName, setFullName] = useState<string>('');
-    const styles = useStyles();
-    const { getItem, setItem, removeItem } = useStorage()
+
 
     const [local] = useState<number>((): number => {
         const from_local_session = getItem('slider_value', 'local')
@@ -31,6 +32,7 @@ const QuestionOne = () => {
         setFullName(userName)
         setItem('slider_value', `${sliderValue}`, 'session', 'user_choices');
         setItem('slider_value', `${sliderValue}`, 'local');
+        // console.log("Slider Value: ", sliderValue);
 
     }, [userName, fullName, sliderValue, setItem])
 

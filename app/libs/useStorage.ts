@@ -31,7 +31,7 @@ const useStorage = (): UseStorageReturnValue => {
         return '0'
     }
 
-    const setItem = (key: string, value: string | string[], type?:StorageType,sessionKey:SessionPreference = 'user_choices' ):boolean => {
+    const setItem = (key: string, value: string | string[], type?:StorageType, sessionKey:SessionPreference = 'user_choices' ):boolean => {
       if(isBrowser){
 
        if(type === 'session'){

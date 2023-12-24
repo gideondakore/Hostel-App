@@ -29,7 +29,9 @@ const Question = ({ params }: { params: { id: string } }) => {
             const modPath: number = (Number(params.id) + 1) % 6;
             const validatedUrl: string = `/${modPath === 0 ? modPath + 1 : modPath}`;
             const actualPath = path.replace(slicePath, validatedUrl);
-            const from_localStorage_sliderVal = getItem('slider_value');
+            const from_localStorage_sliderVal = getItem('slider_value', 'local');
+            // console.log("Slider Value from page: ", from_localStorage_sliderVal);
+
 
             if ((Number(from_localStorage_sliderVal) !== 0)) {
                 router.push(actualPath, { scroll: true });

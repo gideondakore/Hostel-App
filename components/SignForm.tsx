@@ -2,6 +2,7 @@
 import React, { ReactNode } from 'react'
 import { useState, useEffect } from 'react';
 import styles from '@/styles/Register.module.css'
+import useStorage from '@/app/libs/useStorage';
 
 
 const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }: {
@@ -23,6 +24,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     const [error, setError] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState<Array<string | undefined>>([]);
     const [success, setSuccess] = useState<boolean>(false);
+    const { getItem, setItem } = useStorage();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -47,6 +49,9 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
 
             if (!res.ok) {
                 throw new Error("Failed to submit data, please try again");
+            } else {
+                setItem("user_name", name, 'local');
+                setItem('user_name', name, 'session', 'hostel_user');
             }
 
             const { msg, success } = await res.json();

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             // console.log(errorList);
             return NextResponse.json({msg: errorList});
         }else{
-            return NextResponse.json({msg: "Unable to send message"});
+            return NextResponse.json({msg: ["Unable to send message"]});
         }
     }
 } 

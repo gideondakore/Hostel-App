@@ -50,6 +50,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             }
 
             const { msg, success } = await res.json();
+            //console.log("Message: ", msg);
             setErrorMsg(msg);
             setSuccess(success);
 

@@ -24,20 +24,22 @@ const Question = ({ params }: { params: { id: string } }) => {
     }
 
     const handleNextClick = () => {
-        if (Number(params.id) > 0 && Number(params.id) < 6) {
-            const slicePath = path.slice(path.lastIndexOf('/'));
-            const modPath: number = (Number(params.id) + 1) % 6;
-            const validatedUrl: string = `/${modPath === 0 ? modPath + 1 : modPath}`;
-            const actualPath = path.replace(slicePath, validatedUrl);
-            const from_localStorage_sliderVal = getItem('slider_value', 'local');
-            // console.log("Slider Value from page: ", from_localStorage_sliderVal);
+        if (Number(params.id) === 5) {
+            router.push('/hostel-list');
+        } else {
+            if (Number(params.id) > 0 && Number(params.id) < 6) {
+                const slicePath = path.slice(path.lastIndexOf('/'));
+                const modPath: number = (Number(params.id) + 1) % 6;
+                const validatedUrl: string = `/${modPath === 0 ? modPath + 1 : modPath}`;
+                const actualPath = path.replace(slicePath, validatedUrl);
+                const from_localStorage_sliderVal = getItem('slider_value', 'local');
 
-
-            if ((Number(from_localStorage_sliderVal) !== 0)) {
-                router.push(actualPath, { scroll: true });
-            } else {
-                window.alert('Select a distance');
-                console.log('Select a distance');
+                if ((Number(from_localStorage_sliderVal) !== 0)) {
+                    router.push(actualPath, { scroll: true });
+                } else {
+                    window.alert('Select a distance');
+                    console.log('Select a distance');
+                }
             }
         }
     }
@@ -51,7 +53,7 @@ const Question = ({ params }: { params: { id: string } }) => {
         <div className={styles.questionDashboardWrapper}>
             <div className={styles.questionDashboard}>
                 <div className={styles.questionLeft}>
-                    <Image priority={true} src='/hostel-3.webp' alt='question background' fill style={{ borderRadius: '20px', }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                    <Image priority={true} src='/hostelLeft.jpg' alt='question background' fill style={{ borderRadius: '20px', }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                     <div className={styles.questionLogo}>
                         <Image src='/hostelIcon.png' alt='logo' height={100} width={100} style={{ position: 'absolute', top: '30px', left: '30px', }} />
                         {activeStep === 0 && <p className={styles.questionPara}>Your ideal hostel is just 5 steps away.</p>}

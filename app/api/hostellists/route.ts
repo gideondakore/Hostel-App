@@ -2,6 +2,7 @@ import connectHostelList from "@/app/libs/mongoHostelList";
 import Hostellist from "@/app/models/hostellist";
 import { NextRequest, NextResponse } from "next/server";
 
+// export const dynamic = 'force-dynamic';
 export async function POST(req: NextRequest){
     try {
         const {title, description, gender, imgSrc} = await req.json();

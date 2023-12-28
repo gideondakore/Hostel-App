@@ -1,7 +1,6 @@
 const getHostelLists = async () => {
     try {
         const res = await fetch("http://localhost:3000/api/hostellists", {
-            cache: "no-cache",
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import getHostelLists from '@/app/libs/getHostelLists';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 
 const HostelList = ({ viewMoreClick }: { viewMoreClick: boolean }) => {
+    const router = useRouter();
     const [hostelLists, setHostel] = useState<Array<{ _id: string, title: string, description: string, gender: string, imgSrc: string }>>();
 
     useEffect(() => {
@@ -25,8 +27,9 @@ const HostelList = ({ viewMoreClick }: { viewMoreClick: boolean }) => {
         };
 
         fetch();
+        router.refresh();
 
-    }, [viewMoreClick]);
+    }, [viewMoreClick, router]);
 
 
     return (

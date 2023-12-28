@@ -45,7 +45,7 @@ const QuestionFive: React.FC<{}> = () => {
                 <label className={styles.amenitiesItems}>
                     <Image src='/friendHostel.gif' alt='Giv picture of Milk,Cofee,Tea' fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority={true} style={{ borderRadius: '10px' }} />
                     <input id='amenitiesFour' name='having_friends' className={styles.checkInput} value='having_friends' type='checkbox' onChange={handleCheckboxChange} checked={selectedCheckboxes.includes('having_friends')} />
-                    <span className={styles.checkSpan}>visitor=friendly policy</span>
+                    <span className={styles.checkSpan}>visitor-cfriendly policy</span>
                 </label>
             </div>
         </>

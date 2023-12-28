@@ -13,8 +13,9 @@ const connectHostelList = async () => {
             await mongoose.connect(mongodbUri);
             console.log("Hostel list connected");
         }
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
+        throw new Error(error)
     }
 }
 export default connectHostelList;

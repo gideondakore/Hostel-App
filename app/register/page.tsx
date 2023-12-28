@@ -12,15 +12,11 @@ const Register = () => {
     const [modal, setModal] = useState<boolean>(false);
 
     const handleContinueClick = (newDataOne: boolean) => {
-        // setContinueBtn(!newDataOne);
         setContinueBtn(newDataOne);
-
-        // console.log("---- ", newDataOne);
     }
 
     const handleModal = () => {
         setModal(!modal);
-        // console.log("from page ", modal);
     }
 
     interface Icredentials {

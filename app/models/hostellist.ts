@@ -1,15 +1,12 @@
 import mongoose, {Schema} from "mongoose";
 
-const GenderType = ['Boy', 'Girl', 'Co-Living'];
 
 const hostelListSchema = new Schema(
  {
     title: String,
     description: String,
-    gender: {
-        type: String,
-        enum: GenderType
-    }
+    gender: String,
+    imgSrc: String,
  },
  {
     timestamps: true,

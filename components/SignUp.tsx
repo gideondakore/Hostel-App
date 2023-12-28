@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { FC } from 'react'
 import styles from '@/styles/Register.module.css'
 import SignForm from './SignForm'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-const SignUp = ({ credentials, handleContinueClick, handleModal }: {
-    credentials:
-    { type: string, name: string, placeholder: string, id: string, labelText: string, continueText: string },
+
+interface SignUpProps {
+    credentials: { type: string, name: string, placeholder: string, id: string, labelText: string, continueText: string },
     handleContinueClick: (newDataOne: boolean) => void,
     handleModal: () => void,
-}) => {
+}
+
+const SignUp: FC<SignUpProps> = ({ credentials, handleContinueClick, handleModal }) => {
 
     const [success, setSuccess] = useState<boolean>(false);
     const route = useRouter()

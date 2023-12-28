@@ -1,7 +1,5 @@
-import connectHostelList from "@/app/libs/mongoHostelList";
 import connectDB from "@/app/libs/mongodb";
 import Contact from "@/app/models/contact";
-import Hostellist from "@/app/models/hostellist";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -29,13 +27,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 }
 
-export async function GET(req: NextRequest){
-    try {
-        await connectHostelList();
-        const hostelLists = Hostellist.find();
-        return NextResponse.json({hostelLists});
-    } catch (error) {
-        return NextResponse.json({error: "Unable to fetch hostel list data"}, {status: 404})
-    }
-}
+
 

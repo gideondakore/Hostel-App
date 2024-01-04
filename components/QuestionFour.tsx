@@ -20,7 +20,6 @@ const QuestionFour: React.FC<{}> = () => {
 
     useEffect(() => {
         setItem('extraFeature_array', selectedCheckboxes, 'session')
-        setItem('extraFeature_array', selectedCheckboxes, 'local')
 
     }, [selectedCheckboxes, setItem])
 

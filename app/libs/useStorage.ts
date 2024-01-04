@@ -7,16 +7,6 @@ type UseStorageReturnValue = {
 }
 
 const useStorage = (): UseStorageReturnValue => {
-    const getSessionLocalKey = (): string[] => {
-        const keys: string[] = [];
-        for(let i = 0; i < sessionStorage.length; i++){
-            const key = sessionStorage.key(i)
-            if(key)
-             keys.push(key)
-        }
-        return keys;
-    }
-
     const isBrowser = ((): boolean => typeof window !== 'undefined')();
     const storageType = (type?:StorageType):'localStorage' | 'sessionStorage' => `${type ?? 'session'}Storage`;
 
@@ -24,11 +14,11 @@ const useStorage = (): UseStorageReturnValue => {
         if(isBrowser){
             const from_local_session = window[storageType(type)].getItem(key)
             if(from_local_session === undefined || from_local_session === null){
-                return '0'
+                return ""
             }
-            return from_local_session ? from_local_session : '0'
+            return from_local_session ? from_local_session : ""
         }
-        return '0'
+        return ""
     }
 
     const setItem = (key: string, value: string | string[], type?:StorageType, sessionKey:SessionPreference = 'user_choices' ):boolean => {
@@ -37,14 +27,12 @@ const useStorage = (): UseStorageReturnValue => {
        if(type === 'session'){
            if(sessionKey === 'hostel_user'){
             const existingData = window[storageType(type)].getItem(sessionKey);
-            // console.log("Hostel User", existingData)
             const hostel_user = existingData ? JSON.parse(existingData) : {}
             hostel_user[key] = value
             window[storageType(type)].setItem(sessionKey, JSON.stringify(hostel_user));
             return true;
            }else if(sessionKey === 'user_choices'){
             const existingData = window[storageType(type)].getItem(sessionKey);
-            // console.log("User choice", existingData)
             const user_choices = existingData ? JSON.parse(existingData) : {}
 
             Array.isArray(value) ? user_choices[key] = value : user_choices[key] = [value]

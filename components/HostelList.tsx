@@ -5,6 +5,7 @@ import Link from "next/link";
 import getHostelLists from '@/app/libs/getHostelLists';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Loading from '@/app/loading';
 
 
 
@@ -62,7 +63,8 @@ const HostelList = ({ viewMoreClick }: { viewMoreClick: boolean }) => {
                     </div>
                 ))
             ) : (
-                <p>Loading Hostels</p>
+                //<p>Loading Hostels</p>
+                <Loading />
             )}
         </>
     )

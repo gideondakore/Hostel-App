@@ -18,6 +18,7 @@ export async function GET(req: NextRequest){
     try {
         await connectHostelList();
         const hostelLists = await Hostellist.find();
+        console.log(hostelLists);
         return NextResponse.json({hostelLists}, {status: 200});
     } catch (error) {
         return NextResponse.json({error: "Unable to fetch hostel list data"}, {status: 404})

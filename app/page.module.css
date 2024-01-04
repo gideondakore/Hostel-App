@@ -2,10 +2,8 @@
     display: flex;
     height: 100vh;
     align-items: center;
-    justify-content: space-between;
     flex-direction: column;
-    
-
+    gap: 10px;
 }
 .caption_txt{
     text-transform: capitalize;
@@ -15,7 +13,13 @@
 
 .home_btn{
   border-radius: 20px;
-  /* margin: 50px */
   width: 100px;
-  /* height: 100px; */
+}
+
+.btn{
+  text-decoration: none;
+  color: rgb(41, 158, 125);
+  font-size: 30px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(9,121,83,1) 35%, rgba(0,212,255,1) 100%);
 }

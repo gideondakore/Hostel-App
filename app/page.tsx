@@ -1,6 +1,5 @@
 import Image from "next/image"
 import styles from "./page.module.css"
-import { useRouter } from "next/router"
 import Link from "next/link"
 
 const Home = () => {
@@ -8,7 +7,8 @@ const Home = () => {
     <div className={styles.home}>
       <Image src="/hostelIcon.png" alt="logo" priority={true} width={100} height={100} />
       <p className={styles.caption_txt}>Unlock Your Adventure:<br /> Where Comfort Meets Affordability<br /> Book Your Home Away from Home with Ease<br /> on Our Hostel Haven App!</p>
-      <Link href="/register">click me</Link>
+
+      <Link href="/register" className={styles.btn}>click me</Link>
     </div>
   )
 }

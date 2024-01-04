@@ -3,8 +3,7 @@ import React from 'react'
 import SignUp from '@/components/SignUp'
 import { useState } from 'react';
 import Modal from '@/components/Modal';
-import { StylesProvider } from '@/components/StylesContext';
-import { useStyles } from '@/components/StylesContext';
+
 
 const Register = () => {
 

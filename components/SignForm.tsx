@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react'
 import { useState, useEffect } from 'react';
 import styles from '@/styles/Register.module.css'
 import useStorage from '@/app/libs/useStorage';
+import { BounceLoader } from 'react-spinners';
 
 
 const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }: {
@@ -24,7 +25,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     const [error, setError] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState<Array<string | undefined>>([]);
     const [success, setSuccess] = useState<boolean>(false);
-    const { getItem, setItem } = useStorage();
+    const { setItem } = useStorage();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -55,7 +56,6 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             }
 
             const { msg, success } = await res.json();
-            //console.log("Message: ", msg);
             setErrorMsg(msg);
             setSuccess(success);
 
@@ -88,7 +88,6 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
         const newDataTwo: boolean = !modal;
         setModal(newDataTwo);
         handleModal();
-        // console.log("from signup ", newDataTwo);
     }
 
     useEffect(() => {
@@ -96,7 +95,8 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     }, [success, successInfo])
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} style={{ opacity: isLoading ? '0.5' : '1' }}>
+
             <div className={styles.registerInputItem}>
                 <label htmlFor='name'>Enter name</label>
                 <div className={styles.inputItem}>
@@ -134,7 +134,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
                 </select>
             </div>
             <div className={styles.btnItem}>
-                <button type='submit' className={styles.submitBtn}>{isLoading ? 'Loading...' : 'SUBMIT'}</button>
+                <button type='submit' className={styles.submitBtn} style={{ opacity: isLoading ? '0.5' : '1' }}>{isLoading ? 'Loading...' : 'SUBMIT'}</button>
                 <button type='button' className={styles.skipBtn} onClick={handleClickModal}>skip -&gt;</button>
             </div>
             {errorMsg && (errorMsg as ReactNode[]).map((err, index) => (

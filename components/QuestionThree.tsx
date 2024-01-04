@@ -20,7 +20,6 @@ const QuestionThree: React.FC<{}> = () => {
 
     useEffect(() => {
         setItem('facility_array', selectedCheckboxes, 'session')
-        setItem('facility_array', selectedCheckboxes, 'local')
 
     }, [selectedCheckboxes, setItem])
 

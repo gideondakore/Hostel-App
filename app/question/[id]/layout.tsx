@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { StylesProvider } from '@/components/StylesContext'
-// import Question from './page' NB here//////
 import styles from '@/styles/QuestionOne.module.css'
-// import Question from './page'
-// import '@/styles/QuestionOne.module.css'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,14 +17,10 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        // <html lang="en">
         <div className={inter.className}>
             <StylesProvider styles={styles}>
                 {children}
-                {/* Note here */}
-                {/* <Question /> */}
             </StylesProvider>
         </div>
-        // </html>
     )
 }

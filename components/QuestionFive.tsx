@@ -20,7 +20,6 @@ const QuestionFive: React.FC<{}> = () => {
 
     useEffect(() => {
         setItem('addFeatures_array', selectedCheckboxes, 'session');
-        setItem('addFeatures_array', selectedCheckboxes, 'local')
     }, [selectedCheckboxes, setItem])
 
     return (

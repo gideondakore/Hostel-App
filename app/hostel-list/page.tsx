@@ -1,7 +1,8 @@
 'use client'
 import HostelListNav from "@/components/HostelListNav";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import HostelList from "@/components/HostelList";
+import Loading from "../loading";
 
 
 const Hostel = () => {
@@ -23,7 +24,9 @@ const Hostel = () => {
                 }
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '90%', flexWrap: "wrap" }}>
-                <HostelList viewMoreClick={viewMoreClick} />
+                <Suspense fallback={<Loading />}>
+                    <HostelList viewMoreClick={viewMoreClick} />
+                </Suspense>
             </div>
         </div>
     );

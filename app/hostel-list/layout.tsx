@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Suspense } from 'react'
+import Loading from '../loading'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +17,9 @@ export default function RootLayout({
 }) {
     return (
         <div className={inter.className} style={{ padding: '0px 4rem' }}>
-            {children}
+            <Suspense fallback={<Loading />}>
+                {children}
+            </Suspense>
         </div>
     )
 }

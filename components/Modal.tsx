@@ -8,7 +8,6 @@ const Modal = ({ setModal }: { setModal: (newDta: boolean) => void }) => {
     const { getItem, setItem, removeItem } = useStorage();
 
     const [local] = useState<string>(((): string => {
-        // getItem('user_name', 'session')
         return getItem('user_name', 'local')
 
     }))
@@ -32,8 +31,6 @@ const Modal = ({ setModal }: { setModal: (newDta: boolean) => void }) => {
         setItem('user_gender', gender, 'local');
         setItem('user_name', name, 'session', 'hostel_user');
         setItem('user_gender', gender, 'session', 'hostel_user');
-
-
     }, [name, gender, setItem])
 
 

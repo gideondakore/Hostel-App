@@ -8,18 +8,17 @@ const QuestionOne = () => {
     const { getItem, setItem, removeItem } = useStorage()
 
     const [userName] = useState<string>((): string => {
-        if (typeof window !== 'undefined') {
-            const from_localStorage = getItem('user_name', 'local');
-            return `${from_localStorage}`;
-        }
-        return ''
+        const from_localStorage = getItem('user_name', 'local');
+        return `${from_localStorage}`;
     })
 
 
 
     const [local] = useState<number>((): number => {
         const from_local_session = getItem('slider_value', 'local')
-        return parseInt(from_local_session, 10)
+        if (from_local_session == "")
+            return 0
+        return parseInt(from_local_session, 10);
     })
 
     const [sliderValue, setSliderValue] = useState<number>(local);
@@ -32,7 +31,6 @@ const QuestionOne = () => {
         setFullName(userName)
         setItem('slider_value', `${sliderValue}`, 'session', 'user_choices');
         setItem('slider_value', `${sliderValue}`, 'local');
-        // console.log("Slider Value: ", sliderValue);
 
     }, [userName, fullName, sliderValue, setItem])
 

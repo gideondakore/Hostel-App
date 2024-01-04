@@ -20,7 +20,6 @@ const QuestionTwo: React.FC<{}> = () => {
 
     useEffect(() => {
         setItem('amenity_array', selectedCheckboxes, 'session')
-        setItem('amenity_array', selectedCheckboxes, 'local')
 
     }, [selectedCheckboxes, setItem])
 

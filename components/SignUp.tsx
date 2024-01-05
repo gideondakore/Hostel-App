@@ -5,7 +5,6 @@ import styles from '@/styles/Register.module.css'
 import SignForm from './SignForm'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Loading from '@/app/loading'
 
 
 interface SignUpProps {

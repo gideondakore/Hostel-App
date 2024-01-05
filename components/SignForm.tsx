@@ -1,10 +1,10 @@
 
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useRef } from 'react'
 import { useState, useEffect } from 'react';
 import styles from '@/styles/Register.module.css'
 import useStorage from '@/app/libs/useStorage';
-import { BounceLoader } from 'react-spinners';
-
+import { MdOutlineVisibilityOff } from "react-icons/md"
+import { MdOutlineVisibility } from "react-icons/md"
 
 const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }: {
     credentials:
@@ -26,14 +26,14 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     const [errorMsg, setErrorMsg] = useState<Array<string | undefined>>([]);
     const [success, setSuccess] = useState<boolean>(false);
     const { setItem } = useStorage();
+    const passToggleRef = useRef<HTMLInputElement | null>(null);
+    const [isVisible, setIsVisible] = useState<"password" | "text">("password");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
         try {
-
-
             const res = await fetch('api/contacts', {
                 method: 'POST',
                 headers: {
@@ -90,13 +90,26 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
         handleModal();
     }
 
+    const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const eProp = passToggleRef.current;
+        if (eProp) {
+            if (eProp?.type === "password") {
+                setIsVisible("text");
+            } else {
+                setIsVisible("password");
+            }
+        }
+
+    }
+
     useEffect(() => {
         successInfo(success);
     }, [success, successInfo])
 
     return (
         <form className={styles.form} onSubmit={handleSubmit} style={{ opacity: isLoading ? '0.5' : '1' }}>
-
             <div className={styles.registerInputItem}>
                 <label htmlFor='name'>Enter name</label>
                 <div className={styles.inputItem}>
@@ -108,7 +121,6 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
                 <label htmlFor={credentials.id}>{credentials.labelText}</label>
                 <div className={styles.inputItem}>
                     <input type={credentials.type} name={credentials.name} placeholder={credentials.placeholder} id={credentials.id} value={credentials.type === 'email' ? email : phone} onChange={({ target }) => credentials.type === 'email' ? setEmail(target?.value) : setPhone(target?.value)} />
-
                     <div className={styles.continue}>
                         <button type='button' className={styles.continueBtn} onClick={handleClick}>
                             <i>
@@ -120,8 +132,9 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             </div>
             <div className={styles.registerInputItem}>
                 <label htmlFor='password'>Password</label>
-                <div className={styles.inputItem}>
-                    <input type='password' name='password' placeholder='Enter your password' id='password' value={password} onChange={({ target }) => setPassword(target?.value)} />
+                <div className={styles.inputItemPass}>
+                    <input style={{ borderRight: '0px' }} ref={passToggleRef} type={isVisible} name='password' placeholder='Enter your password' id='password' value={password} onChange={({ target }) => setPassword(target?.value)} />
+                    <button style={{ borderRadius: '0px', backgroundColor: 'white', borderLeft: '0px', cursor: 'pointer' }} onClick={togglePasswordVisibility}>{isVisible === "password" ? <MdOutlineVisibilityOff size={30} /> : <MdOutlineVisibility size={30} />}</button>
                 </div>
             </div>
             <div className={styles.registerSelectGender}>

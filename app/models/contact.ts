@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import connectDB from "../libs/mongodb";
 
 interface IContact extends Document {
   name: string;
@@ -62,7 +63,7 @@ const contactSchema = new Schema({
         default: Date.now,
     }
 })
-
-const Contact = mongoose.models.Contact || mongoose.model("Contact",contactSchema);
+const {conn} = connectDB();
+const Contact = conn.models.Contact || conn.model("Contact", contactSchema);
 
 export default Contact;

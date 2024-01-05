@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-
+import connectHostelList from "../libs/mongoHostelList";
 
 const hostelListSchema = new Schema(
  {
@@ -12,7 +12,8 @@ const hostelListSchema = new Schema(
     timestamps: true,
  });
 
- const Hostellist = mongoose.models.Hostellist || mongoose.model("Hostellist", hostelListSchema);
+ const {conn} = connectHostelList();
+ const Hostellist = conn.models.Hostellist || conn.model("Hostellist", hostelListSchema);
  
  export default Hostellist; 
 

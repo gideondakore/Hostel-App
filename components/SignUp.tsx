@@ -49,7 +49,7 @@ const SignUp: FC<SignUpProps> = ({ credentials, handleContinueClick, handleModal
                     {/* <h1>REGISTER</h1> */}
                     <div className={styles.registerLeft}>
                         <div className={styles.wowAnimation}>
-                            <Image src="/hostelIcon.png" alt="wow icon" priority={true} width={120} height={80} />
+                            {/* <Image src="/hostelIcon.png" alt="wow icon" priority={true} width={120} height={80} /> */}
                         </div>
                         <h6 className={styles.registerPara}>
                             There are <b>30+</b> hostels available

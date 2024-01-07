@@ -22,7 +22,6 @@ export const useStyles = () => {
     if (!styles) {
         throw new Error('useStyles must be use within StylesProvider');
     }
-
     return styles;
 
 }

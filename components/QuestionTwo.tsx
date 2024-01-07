@@ -8,6 +8,7 @@ const QuestionTwo: React.FC<{}> = () => {
     const styles = useStyles();
     const { setItem } = useStorage();
 
+
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
         if (selectedCheckboxes.includes(value)) {

@@ -13,18 +13,14 @@ const LoginForm = () => {
     const [inputType, setInputType] = useState<UserInputType>("email");
     const [errors, setErrors] = useState<string[]>([]);
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
+    async function handleSubmit() {
+        // e.preventDefault();
 
         if (errors.length > 0) {
             alert(errors.join('\n'));
         } else {
             try {
-                const res = await fetch(`http://localhost:3000/api/contacts/hostellogin?${inputType}=${userInput}&password=${userPass}`, {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
+                const res = await fetch(`http://localhost:3000/api/contacts/hostellogin?${inputType}=${userInput}&password=${userPass}`);
 
                 if (!res.ok) {
                     throw new Error("Fail to connect to database endpoint");

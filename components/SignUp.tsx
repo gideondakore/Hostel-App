@@ -5,7 +5,6 @@ import styles from '@/styles/Register.module.css'
 import SignForm from './SignForm'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Loading from '@/app/loading'
 
 
 interface SignUpProps {
@@ -50,7 +49,7 @@ const SignUp: FC<SignUpProps> = ({ credentials, handleContinueClick, handleModal
                     {/* <h1>REGISTER</h1> */}
                     <div className={styles.registerLeft}>
                         <div className={styles.wowAnimation}>
-                            <Image src="/hostelIcon.png" alt="wow icon" priority={true} width={120} height={80} />
+                            {/* <Image src="/hostelIcon.png" alt="wow icon" priority={true} width={120} height={80} /> */}
                         </div>
                         <h6 className={styles.registerPara}>
                             There are <b>30+</b> hostels available

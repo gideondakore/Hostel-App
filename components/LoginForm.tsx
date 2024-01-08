@@ -1,5 +1,5 @@
 'use client'
-import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import checkPasswordValidity from '@/app/libs/checkPasswordValidity';
@@ -12,7 +12,6 @@ const LoginForm = () => {
     const [validInput, setValidInput] = useState<boolean>(false);
     const [inputType, setInputType] = useState<UserInputType>("email");
     const [errors, setErrors] = useState<string[]>([]);
-
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -31,46 +30,50 @@ const LoginForm = () => {
                     throw new Error("Fail to connect to database endpoint");
                 }
                 const { user, message, success } = await res.json();
-                console.log(user, message, success);
+                console.log("Request Info: ", user, message, success);
             } catch (error: any) {
                 throw new Error(error.message);
             }
         }
 
-    }
+    };
 
     useEffect(() => {
-        const validEmailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-        const validPhoneRegex = /^(?:[+]?[2][3][3]|0)?[1-9]\d{8}$/;
         const msgStr: string = "Invalid email or phone number";
-        if (validEmailRegex.test(userInput)) {
-            setValidInput(true);
-            setInputType("email")
-            setErrors((prev) => prev.filter((msg) => msg !== msgStr));
-        } else if (validPhoneRegex.test(userInput)) {
-            setValidInput(true);
-            setInputType("phone");
-            setErrors((prev) => prev.filter((msg) => msg !== msgStr));
-        } else {
-            setValidInput(false);
-            setErrors(["Invalid email or phone number"]);
+
+        const emailOrPhoneValidity = () => {
+            const validEmailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+            const validPhoneRegex = /^(?:[+]?[2][3][3]|0)?[1-9]\d{8}$/;
+            if (validEmailRegex.test(userInput)) {
+                setValidInput(true);
+                setInputType("email")
+            } else if (validPhoneRegex.test(userInput)) {
+                setValidInput(true);
+                setInputType("phone");
+            } else {
+                setValidInput(false);
+            }
+        };
+        emailOrPhoneValidity();
+
+        const passValidity = () => {
+            const errMsgs: string[] = checkPasswordValidity(userPass);
+            setErrors(errMsgs);
+        }
+        passValidity();
+
+        if (!validInput) {
+            setErrors((prev) => [msgStr, ...prev]);
         }
 
-        const errMsgs: string[] = checkPasswordValidity(userPass);
-        let uniqueErrorMsg: string[] = [...new Set(errMsgs)];
 
-        setErrors((prev): string[] => {
-            uniqueErrorMsg = [...new Set(prev), ...new Set(errMsgs)]
-            return [...new Set(uniqueErrorMsg)];
-        });
-        console.log(errors);
 
-    }, [userInput, userPass, errors]);
+    }, [userPass, userInput, validInput]);
 
     return (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '50px 0px 50px 0px', borderRadius: '10px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <input type='text' name={inputType} id={inputType} style={{ height: '40px', width: '50%', borderRadius: '5px', border: validInput ? '3px solid green' : '3px solid red' }} value={userInput} placeholder='Enter Email or Phone' onChange={({ target }) => setUserInput(target.value)} />
+                <input type='text' name={inputType} id={inputType} style={{ height: '40px', width: '50%', borderRadius: '5px', border: validInput ? '3px solid green' : '3px solid red' }} value={userInput} placeholder='Enter Email or Phone' onChange={({ target }) => setUserInput(target?.value)} />
                 <input type='password' name='password' id='password' style={{ height: '40px', width: '50%', borderRadius: '5px' }} value={userPass} placeholder='Password' onChange={({ target }) => setUserPass(target?.value)} />
             </div>
             <div style={{ width: '50%', display: 'grid', gridTemplateColumns: 'auto auto', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -85,7 +88,6 @@ const LoginForm = () => {
                 <button type='button' style={{ cursor: 'pointer' }}>Forgot password?</button>
             </div>
             <div style={{ width: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-
                 <hr style={{ borderTop: '1px solid gray', width: '40%', height: '1px', margin: '0px' }} />
                 <p>or</p>
                 <hr style={{ borderTop: '1px solid gray', width: '40%', height: '1px', margin: '0px' }} />

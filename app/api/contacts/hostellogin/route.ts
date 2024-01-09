@@ -16,9 +16,8 @@ export async function GET (request: NextRequest, response: NextResponse) {
           {password: userPassword}
         ]
         });
-
       if(user)
-       return NextResponse.json({user, message: "successfully", success: true}, {status: 200});
+       return NextResponse.json({user, message: "Welcome back", success: true}, {status: 200});
       else
        return NextResponse.json({user, message: "user not found", success: false}, {status: 201});
         

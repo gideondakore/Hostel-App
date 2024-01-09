@@ -19,7 +19,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       if(userPassword){
         validatedCredentials.push(...checkPasswordValidity(userPassword));
         }else{
-            validatedCredentials.push("Valided password must be provided");
+            validatedCredentials.push("Valid password must be provided");
         }
 
       if(userEmailOrPhone){
@@ -28,14 +28,19 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
         }
       }else{
-        validatedCredentials.unshift("Valided email or phone number must be provided");
+        validatedCredentials.unshift("Valid email or phone number must be provided");
       }
         
       if(Array.isArray(validatedCredentials) && (validatedCredentials.length === 0)){
 
-          const res = await fetch(`http://localhost:3000/api/contacts/?${emailOrPhone}=${userEmailOrPhone}`);
+          const res = await fetch(`http://localhost:3000/api/contacts?${emailOrPhone}=${userEmailOrPhone}`,{
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
           if(!res.ok){
-            return NextResponse.json({message: ["Ooops! somthing went wrong, try again later"], success: false}, {status: 500});
+            return NextResponse.json({message: ["Ooops! something went wrong, try again later"], success: false}, {status: 500});
           }
 
           const {message, success} = await res.json();
@@ -46,7 +51,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
           await Contact.create(body);
           return NextResponse.json({message: ["Account created successfully"], success: true}, {status: 200});
       }
-        console.log(validatedCredentials.length !== 0);
         return NextResponse.json({message: validatedCredentials, success: false}, {status: 500});
 
     } catch (error) {
@@ -55,9 +59,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
             for(let e in error.errors){
                 errorList.push((error.errors[e].message));
             }
-            return NextResponse.json({message: errorList});
+            return NextResponse.json({message: errorList}, {status: 500});
         }else{
-            return NextResponse.json({message: ["Unable to send message"]});
+            return NextResponse.json({message: ["Unable to send request"]}, {status: 500});
         }
     }
 }

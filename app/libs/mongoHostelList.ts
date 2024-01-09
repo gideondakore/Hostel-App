@@ -9,7 +9,6 @@ const connectHostelList = () => {
           }
           const conn = mongoose.createConnection(mongodbUri);
           return {conn};
-
      } catch (error) {
         throw new Error(`Error:${error}`);
      }

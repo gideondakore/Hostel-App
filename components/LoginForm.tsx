@@ -1,36 +1,47 @@
 'use client'
-import React, { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
-import checkPasswordValidity from '@/app/libs/checkPasswordValidity';
+import { useRouter } from 'next/navigation';
+import useStorage from '@/app/libs/useStorage';
 
 const LoginForm = () => {
+    const { setItem, getItem } = useStorage();
+    const router = useRouter();
     type UserInputType = "email" | "phone";
     const [userInput, setUserInput] = useState<string>("");
     const [userPass, setUserPass] = useState<string>("");
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [validInput, setValidInput] = useState<boolean>(false);
     const [inputType, setInputType] = useState<UserInputType>("email");
-    const [errors, setErrors] = useState<string[]>([]);
+    const [errors, setErrors] = useState<string>("");
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+
+    async function handleSubmit(e: React.MouseEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        if (errors.length > 0) {
-            alert(errors.join('\n'));
+        if (errors) {
+            alert(errors);
         } else {
             try {
-                const res = await fetch(`http://localhost:3000/api/contacts/hostellogin?${inputType}=${userInput}&password=${userPass}`, {
+                const apiUrl = `http://localhost:3000/api/contacts/hostellogin?${inputType}=${userInput}&password=${userPass}`;
+                const res = await fetch(apiUrl, {
+                    method: 'GET',
                     headers: {
                         "Content-Type": "application/json"
                     }
-                })
+                });
 
                 if (!res.ok) {
                     throw new Error("Fail to connect to database endpoint");
                 }
                 const { user, message, success } = await res.json();
-                console.log("Request Info: ", user, message, success);
+                console.log(user);
+                if (success) {
+                    setItem('user_name', user.name, 'session', 'hostel_user');
+                    setItem('user_name', `${user.name}, ${message}`, 'local');
+                    router.push('/question/1');
+                }
             } catch (error: any) {
                 throw new Error(error.message);
             }
@@ -47,34 +58,25 @@ const LoginForm = () => {
             if (validEmailRegex.test(userInput)) {
                 setValidInput(true);
                 setInputType("email")
+                setErrors("");
             } else if (validPhoneRegex.test(userInput)) {
                 setValidInput(true);
                 setInputType("phone");
+                setErrors("");
             } else {
                 setValidInput(false);
+                setErrors(msgStr);
             }
         };
         emailOrPhoneValidity();
 
-        const passValidity = () => {
-            const errMsgs: string[] = checkPasswordValidity(userPass);
-            setErrors(errMsgs);
-        }
-        passValidity();
-
-        if (!validInput) {
-            setErrors((prev) => [msgStr, ...prev]);
-        }
-
-
-
-    }, [userPass, userInput, validInput]);
+    }, [userInput, validInput]);
 
     return (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '50px 0px 50px 0px', borderRadius: '10px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                 <input type='text' name={inputType} id={inputType} style={{ height: '40px', width: '50%', borderRadius: '5px', border: validInput ? '3px solid green' : '3px solid red' }} value={userInput} placeholder='Enter Email or Phone' onChange={({ target }) => setUserInput(target?.value)} />
-                <input type='password' name='password' id='password' style={{ height: '40px', width: '50%', borderRadius: '5px' }} value={userPass} placeholder='Password' onChange={({ target }) => setUserPass(target?.value)} />
+                <input type='password' name='password' id='password' style={{ height: '40px', width: '50%', borderRadius: '5px' }} value={userPass} onChange={({ target }) => setUserPass(target?.value)} placeholder='Password' />
             </div>
             <div style={{ width: '50%', display: 'grid', gridTemplateColumns: 'auto auto', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
@@ -99,10 +101,8 @@ const LoginForm = () => {
                 </span>
             </button>
             {
-                (Array.isArray(errors) && errors.length !== 0) &&
-                (errors as ReactNode[]).map((err, index) => (
-                    <div key={index}>{err}</div>
-                ))
+                !validInput &&
+                <div>{errors}</div>
             }
         </form>
     )

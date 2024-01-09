@@ -5,14 +5,16 @@ import styles from '@/styles/Register.module.css'
 import useStorage from '@/app/libs/useStorage';
 import { MdOutlineVisibilityOff } from "react-icons/md"
 import { MdOutlineVisibility } from "react-icons/md"
+import checkPasswordValidity from '@/app/libs/checkPasswordValidity';
 
-const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }: {
-    credentials:
-    { type: string, name: string, placeholder: string, id: string, labelText: string, continueText: string },
-    handleContinueClick: (newDataOne: boolean) => void,
-    handleModal: () => void,
+interface SignFormProps {
+    credentials: { type: string, name: string, placeholder: string, id: string, labelText: string, continueText: string };
+    handleContinueClick: (newDataOne: boolean) => void;
+    handleModal: () => void;
     successInfo: (data: boolean) => void
-}) => {
+}
+
+const SignForm: React.FC<SignFormProps> = ({ credentials, handleContinueClick, handleModal, successInfo }) => {
     const [buttonClicked, setButtonClicked] = useState<boolean>(false);
     const [modal, setModal] = useState<boolean>(false);
 
@@ -22,54 +24,60 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     const [gender, setGender] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState<Array<string | undefined>>([]);
     const [success, setSuccess] = useState<boolean>(false);
     const { setItem } = useStorage();
     const passToggleRef = useRef<HTMLInputElement | null>(null);
     const [isVisible, setIsVisible] = useState<"password" | "text">("password");
+    const [validInput, setValidInput] = useState<boolean>(false);
+    const [errors, setErrors] = useState<string[]>([]);
+
+
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setIsLoading(true);
-        setError(null);
-        try {
-            const res = await fetch('api/contacts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name,
-                    [credentials.type === 'email' ? 'email' : 'phone']: credentials.type === 'email' ? email : phone,
-                    password,
-                    gender
+
+        if (errors.length > 0) {
+            alert(errors.join('\n'));
+        } else {
+            setIsLoading(true);
+            try {
+                const res = await fetch('api/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        [credentials.type === 'email' ? 'email' : 'phone']: credentials.type === 'email' ? email : phone,
+                        password,
+                        gender
+                    })
+
                 })
 
-            })
+                if (!res.ok) {
+                    throw new Error("Failed to submit data, please try again");
+                } else {
+                    setItem("user_name", name, 'local');
+                    setItem('user_name', name, 'session', 'hostel_user');
+                }
 
-            if (!res.ok) {
-                throw new Error("Failed to submit data, please try again");
-            } else {
-                setItem("user_name", name, 'local');
-                setItem('user_name', name, 'session', 'hostel_user');
-            }
+                const { msg, success } = await res.json();
+                setErrorMsg(msg);
+                setSuccess(success);
+            } catch (error: any) {
+                throw new Error("Error: ", error);
+            } finally {
+                setIsLoading(false);
+                if (success) {
+                    setName("");
+                    setPhone("");
+                    setEmail("");
+                    setPassword("");
+                    setGender("");
 
-            const { msg, success } = await res.json();
-            setErrorMsg(msg);
-            setSuccess(success);
-        } catch (error: any) {
-            setError(error.message);
-            console.error(error);
-        } finally {
-            setIsLoading(false);
-            if (success) {
-                setName("");
-                setPhone("");
-                setEmail("");
-                setPassword("");
-                setGender("");
-
+                }
             }
         }
     }
@@ -102,8 +110,31 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
     }
 
     useEffect(() => {
+        const msgStr: string = `Invalid ${credentials.type === 'email' ? credentials.type : 'phone ' + credentials.type}`;
+
+        const emailOrPhoneValidity = () => {
+            const validEmailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+            const validPhoneRegex = /^(?:[+]?[2][3][3]|0)?[1-9]\d{8}$/;
+            if (validEmailRegex.test(email) || validPhoneRegex.test(phone)) {
+                setValidInput(true);
+            } else {
+                setValidInput(false);
+            }
+        };
+        emailOrPhoneValidity();
+
+        const passValidity = () => {
+            const errMsgs: string[] = checkPasswordValidity(password);
+            setErrors(errMsgs);
+        }
+        passValidity();
+
+        if (!validInput) {
+            setErrors((prev) => [msgStr, ...prev]);
+        }
+
         successInfo(success);
-    }, [success, successInfo])
+    }, [success, successInfo, email, phone, password, validInput, credentials.type])
 
     return (
         <form className={styles.form} onSubmit={handleSubmit} style={{ opacity: isLoading ? '0.5' : '1' }}>
@@ -117,7 +148,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             <div className={styles.registerInputItemWithCredentialsInput}>
                 <label htmlFor={credentials.id}>{credentials.labelText}</label>
                 <div className={styles.inputItem}>
-                    <input type={credentials.type} name={credentials.name} placeholder={credentials.placeholder} id={credentials.id} value={credentials.type === 'email' ? email : phone} onChange={({ target }) => credentials.type === 'email' ? setEmail(target?.value) : setPhone(target?.value)} />
+                    <input style={{ border: validInput ? '3px solid green' : '3px solid red' }} type={credentials.type} name={credentials.name} placeholder={credentials.placeholder} id={credentials.id} value={credentials.type === 'email' ? email : phone} onChange={({ target }) => credentials.type === 'email' ? setEmail(target?.value) : setPhone(target?.value)} />
                     <div className={styles.continue}>
                         <button type='button' className={styles.continueBtn} onClick={handleClick}>
                             <i>
@@ -130,7 +161,7 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             <div className={styles.registerInputItem}>
                 <label htmlFor='password'>Password</label>
                 <div className={styles.inputItemPass}>
-                    <input style={{ borderRight: '0px' }} ref={passToggleRef} type={isVisible} name='password' placeholder='Enter your password' id='password' value={password} onChange={({ target }) => setPassword(target?.value)} />
+                    <input style={{ borderRight: '0px', border: errors.length === 0 ? '3px solid green' : '3px solid red' }} ref={passToggleRef} type={isVisible} name='password' placeholder='Enter your password' id='password' value={password} onChange={({ target }) => setPassword(target?.value)} />
                     <button style={{ borderRadius: '0px', backgroundColor: 'white', borderLeft: '0px', cursor: 'pointer' }} onClick={togglePasswordVisibility}>{isVisible === "password" ? <MdOutlineVisibilityOff size={30} /> : <MdOutlineVisibility size={30} />}</button>
                 </div>
             </div>
@@ -150,6 +181,13 @@ const SignForm = ({ credentials, handleContinueClick, handleModal, successInfo }
             {errorMsg && (errorMsg as ReactNode[]).map((err, index) => (
                 <div className={styles.errorMsg} style={success ? { color: 'green' } : { color: 'red' }} key={index}>{err}</div>
             ))}
+
+            {
+                (Array.isArray(errors) && errors.length !== 0) &&
+                (errors as ReactNode[]).map((err, index) => (
+                    <div key={index}>{err}</div>
+                ))
+            }
         </form>
     )
 }
